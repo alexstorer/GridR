@@ -1,0 +1,28 @@
+--- Installation hints for GridR ---
+
+- Installation on Linux/Unix systems:
+
+Run "R CMD INSTALL GridR.tar.gz"
+
+- Installation on Windows systems: 
+
+Run "R CMD INSTALL GridR.tar.gz"
+
+or
+
+unpack the archive and run "R CMD INSTALL GridR" in the directory where you unpacked the archive
+
+it might be necessary to install the RTools program (see http://www.murdoch-sutherland.com/Rtools/)
+make sure that the path is set correctly
+
+please download trilead-ssh2-build212.jar or similar at http://www.trilead.com/Download/Trilead_SSH_for_Java/
+and put it into the following directory after the installation of GridR: <path-to-R>/library/GridR/GridR
+
+- knows problems:
+package does not work if it is installed as non-admin user under windows vista, 
+as the package is not installed in the R program directory but somewhere in the user home directory.
+
+- testing:
+
+for quick testing, please use code from TESTING.txt 
+make sure you create a config file before according to the help of the grid.init() function

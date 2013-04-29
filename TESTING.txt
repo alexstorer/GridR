@@ -1,0 +1,32 @@
+library(GridR)
+grid.init()
+
+# test user defined function
+double<-function(x){return(2*x)}
+
+grid.init(service="local")
+grid.apply("y1",double,3, wait=TRUE)
+
+grid.apply("y2",double,3, wait=FALSE)
+grid.waitForResult("y2")
+
+grid.init(service="remote.ssh")
+grid.apply("y3",double,3, wait=TRUE)
+
+grid.apply("y4",double,3, wait=FALSE)
+grid.waitForResult("y4")
+
+grid.init(service="condor.ssh")
+grid.apply("y5",double,3, wait=TRUE)
+
+grid.apply("y6",double,3, wait=FALSE)
+grid.waitForResult("y6")
+
+# test predefined function
+grid.init(service="local")
+grid.apply("s1",sum,1:2, wait=TRUE, check=FALSE)
+
+# test user defined function including predefined function
+sumFromOneTo<-function(x){return(sum(1:x))}
+grid.init(service="local")
+grid.apply("s2",sumFromOneTo,2, wait=TRUE)

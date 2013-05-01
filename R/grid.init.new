@@ -43,7 +43,7 @@
 		return(FALSE)
 	}
 	
-	env=loadNamespace("GridR")
+	env=loadNamespace("GridRLocal")
 	unlockBinding(".grid", env)
 	
 	if(debug)
@@ -321,8 +321,7 @@ nfsDirExists=file.info(substr(.grid$nfs$dir,1, nchar(.grid$nfs$dir)-1))$"isdir"
 if(.grid$nfs$run && is.na(nfsDirExists))
 	dir.create(.grid$nfs$dir)
 
-#initialize .grides
-
+#initialize .grid
 .grid$uniqueName <- paste("grid",Sys.info()["nodename"],Sys.getpid(),gsub(" |:","-",perl=TRUE,as.character(Sys.time())),.grid$count,sep="-")
 .grid$callback <- addTaskCallback(grid.callback)
 if(.grid$nfs$run)

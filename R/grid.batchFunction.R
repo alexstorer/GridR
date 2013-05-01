@@ -59,7 +59,6 @@ function(grid.input.Parameters, fName, yName, varlist, scriptName, remScriptName
 							arguments      = \"CMD BATCH --vanilla --slave ",remScriptName, "-",count,"\"
 							Error          = ",errName,"-",count,"
 							transfer_input_files =",remScriptName,"-",count,",",fName,"
-							transfer_files = ALWAYS
 							Queue", sep="")
 			write.table(condorScript,paste(condorName, "-",count,sep=""),quote=FALSE,row.names=FALSE,col.names=FALSE)
 			err=try(system(paste("condor_submit ",condorName, "-",count, sep="")))#,intern=TRUE))

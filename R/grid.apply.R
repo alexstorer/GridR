@@ -20,13 +20,12 @@ function(grid.input.Parameters.y=NULL,grid.input.Parameters.f=NULL,... ,wait=FAL
 		cat("Error, Please run grid.init(...) first!\n")
 		return(FALSE)
 	}
-	
+	.grid$debug = TRUE
 	if(.grid$debug)
 		debugStr="1"
 	else
 		debugStr="0"
 
-        cat("PRINT ANYTHING!")
 	if(is.null(grid.input.Parameters.y)|| is.null(grid.input.Parameters.f)){
 		cat("wrong usage of grid.apply: first parameter is the variable where to write the output, second is the function, followed by the parameter(s) of the function\n")
 		return(FALSE)

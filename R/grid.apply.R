@@ -245,9 +245,7 @@ else if(.grid$service=="condor.ssh" && is.null(batch) && !.grid$schedulerMode)
 {
 	grid.makeSshAndCondorFiles(plots, yName, psName, fName, remScriptName, scriptName, paste(scriptName, "out",sep=""), varlist, cmd, FALSE, check)
 	if(.grid$system=="linux" && javaSsh==FALSE){
-		# make remote dir and copy files
-          print('Trying to SSH as follows:')
-          print(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"mkdir -p ",.grid$ssh$remotePath,"\"", sep=""))
+		# make remote dir and copy files          
 		system(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"mkdir -p ",.grid$ssh$remotePath,"\"", sep=""), ignore.stderr=TRUE)
 		err=system(paste("scp -B ",remScriptName, " ",scriptName, " ", fName," ",.grid$ssh$username,"@", .grid$ssh$ip,":",.grid$ssh$remotePath, " 2>&1",sep=""), intern=TRUE)
 		if(length(err)!=0) {
@@ -306,6 +304,8 @@ else if(.grid$service=="condor.ssh" && !is.null(batch) && !.grid$schedulerMode)
 	
 	if(.grid$system=="linux" && javaSsh==FALSE){	
 		# make remote dir and copy files
+          print('Trying to SSH as follows:')
+          print(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"mkdir -p ",.grid$ssh$remotePath,"\"", sep=""))
 		system(paste("ssh -f ",.grid$ssh$username,"@",.grid$ssh$ip," \"mkdir -p ",.grid$ssh$remotePath,"\"", sep=""), ignore.stderr=TRUE)
 		err=system(paste("scp -B ",scriptName, " ", fName," ",.grid$ssh$username,"@", .grid$ssh$ip,":",.grid$ssh$remotePath, " 2>&1",sep=""), intern=TRUE)
 		if(length(err)!=0) {

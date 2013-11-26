@@ -16,6 +16,7 @@
 
 `grid.makeSshAndCondorFiles` <-
 function(plots, yName, psName, fName, remScriptName, remMainName,remMainNameOut, varlist, cmd, onlyssh, check, batch=FALSE) {
+        print(c("Check out this:", remMainName))
 	errName<- paste(.grid$uniqueName,"-err",sep="")
 	condorName<-paste(.grid$uniqueName,"-script.condor",sep="")
 	

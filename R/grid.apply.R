@@ -163,7 +163,7 @@ if(.grid$service=="local")
 	if(wait) {
 		if(.grid$debug)
 			cat("starting local mode\n")
-		system(paste(R.home(component="bin"), "/R CMD BATCH --vanilla ", scriptName, sep=""))
+		system(paste(R.home(component="bin"), "/R CMD BATCH  ", scriptName, sep=""))
 		grid.callback()
 	}
 	else
@@ -171,7 +171,7 @@ if(.grid$service=="local")
 		if(.grid$debug)
 			cat("starting local mode\n")
 		grid.lock(grid.input.Parameters.y)
-		system(paste(R.home(component="bin"), "/R CMD BATCH --vanilla ", scriptName, sep=""), wait=FALSE)
+		system(paste(R.home(component="bin"), "/R CMD BATCH  ", scriptName, sep=""), wait=FALSE)
 		
 	}
 }
@@ -194,7 +194,7 @@ if(.grid$system=="linux" && javaSsh==FALSE){
 		if(.grid$debug)
 			cat("starting remote.ssh without JavaSsh\n")
 		# start remote script and copy file back
-		system(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH --vanilla ", scriptName,"\"", sep=""))
+		system(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH ", scriptName,"\"", sep=""))
 		err=system(paste("scp -B ",.grid$ssh$username,"@", .grid$ssh$ip,":",.grid$ssh$remotePath,yName," ", yName, " 2>&1", sep=""),intern=TRUE)
 		if(length(err)!=0) {
 			print(paste("Error, cannot copy result file from remote host\n", err))
@@ -216,9 +216,9 @@ if(.grid$system=="linux" && javaSsh==FALSE){
 			cat("starting remote.ssh without JavaSsh\n")
 		grid.lock(grid.input.Parameters.y)
 		#start remote script
-		system(paste("ssh -f ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH --vanilla ", scriptName,"\"", sep=""))#, intern=TRUE)
+		system(paste("ssh -f ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH ", scriptName,"\"", sep=""))#, intern=TRUE)
 		grid.waitSshResultFile(yName, paste(scriptName, "out", sep=""))
-		system(paste(R.home(component="bin"), "/R CMD BATCH --vanilla --slave ",paste(.grid$uniqueName, "-waitForReturn.R",sep=""), " &", sep=""))
+		system(paste(R.home(component="bin"), "/R CMD BATCH --slave ",paste(.grid$uniqueName, "-waitForReturn.R",sep=""), " &", sep=""))
 	}
 }
 else{#windows
@@ -256,7 +256,7 @@ else if(.grid$service=="condor.ssh" && is.null(batch) && !.grid$schedulerMode)
 			if(.grid$debug)
 				cat("starting condor.ssh without JavaSsh\n")
 			# start remote script and copy file back
-			system(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH --vanilla ", scriptName,"\"", sep=""))
+			system(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH  ", scriptName,"\"", sep=""))
 			err=system(paste("scp -B ",.grid$ssh$username,"@", .grid$ssh$ip,":",.grid$ssh$remotePath,yName," ", yName," 2>&1", sep=""),intern=TRUE)
 			if(length(err)!=0) {
 				print(paste("Error, cannot copy files from remote host\n", err))
@@ -273,9 +273,9 @@ else if(.grid$service=="condor.ssh" && is.null(batch) && !.grid$schedulerMode)
 				cat("starting condor.ssh without JavaSsh\n")
 			grid.lock(grid.input.Parameters.y)
 			#start remote script
-			system(paste("ssh -f ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH --vanilla ", scriptName,"\"", sep=""))#, intern=TRUE)
+			system(paste("ssh -f ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH ", scriptName,"\"", sep=""))#, intern=TRUE)
 			grid.waitSshResultFile(yName, paste(scriptName, "out", sep=""))
-			system(paste(R.home(component="bin"), "/R CMD BATCH --vanilla --slave ",paste(.grid$uniqueName, "-waitForReturn.R",sep=""), " &", sep=""))
+			system(paste(R.home(component="bin"), "/R CMD BATCH  --slave ",paste(.grid$uniqueName, "-waitForReturn.R",sep=""), " &", sep=""))
 		}
 	}
 	else{#Windows
@@ -315,7 +315,7 @@ else if(.grid$service=="condor.ssh" && !is.null(batch) && !.grid$schedulerMode)
 		}	
 		if(wait) {
 			# start remote script and copy file back
-			system(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH --vanilla ", scriptName,"\"", sep=""))
+			system(paste("ssh ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH  ", scriptName,"\"", sep=""))
 			err=system(paste("scp -B ",.grid$ssh$username,"@", .grid$ssh$ip,":",.grid$ssh$remotePath,yName," ", yName, " 2>&1", sep=""),intern=TRUE)
 			if(length(err)!=0) {
 				print(paste("Error, cannot copy files from remote host\n", err))
@@ -330,9 +330,9 @@ else if(.grid$service=="condor.ssh" && !is.null(batch) && !.grid$schedulerMode)
 		{
 			grid.lock(grid.input.Parameters.y)
 			#start remote script
-			system(paste("ssh -f ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH --vanilla ", scriptName,"\"", sep=""))#, intern=TRUE)
+			system(paste("ssh -f ",.grid$ssh$username,"@",.grid$ssh$ip," \"cd ",.grid$ssh$remotePath," && ",.grid$remoteRPath," CMD BATCH  ", scriptName,"\"", sep=""))#, intern=TRUE)
 			grid.waitSshResultFile(yName, paste(scriptName, "out", sep=""))
-			system(paste(R.home(component="bin"), "/R CMD BATCH --vanilla --slave ",paste(.grid$uniqueName, "-waitForReturn.R",sep=""), " &", sep=""))
+			system(paste(R.home(component="bin"), "/R CMD BATCH  --slave ",paste(.grid$uniqueName, "-waitForReturn.R",sep=""), " &", sep=""))
 		}
 	}
 	else{#windows
@@ -357,13 +357,13 @@ else if(.grid$service=="globus.cog")
 	grid.makeCogRFile(scriptName,remScriptName, fName, yName)
 	
 	if(wait){
-		system(paste(R.home(component="bin"), "/R CMD BATCH --vanilla --slave \"",scriptName,"\"", sep=""))
+		system(paste(R.home(component="bin"), "/R CMD BATCH  --slave \"",scriptName,"\"", sep=""))
 		.grid$tmp=grid.callback()
 		
 	}
 	else{
 		grid.lock(grid.input.Parameters.y)
-		system(paste(R.home(component="bin"), "/R CMD BATCH --vanilla --slave \"",scriptName, "\"", sep=""),wait=FALSE)
+		system(paste(R.home(component="bin"), "/R CMD BATCH  --slave \"",scriptName, "\"", sep=""),wait=FALSE)
 	}
 }
 #########################scheduler modes:
@@ -427,7 +427,7 @@ setwd(wd)
 	else
 		cat("wrong mode\n")
 	outputFiles = list(...)
-	command=paste("<job>\n<mode>",sMode,"</mode>\n<username>",.grid$ssh$username,"</username>\n<executable>", executable,"</executable>\n<arguments> CMD BATCH --vanilla ",
+	command=paste("<job>\n<mode>",sMode,"</mode>\n<username>",.grid$ssh$username,"</username>\n<executable>", executable,"</executable>\n<arguments> CMD BATCH  ",
 			scriptName,"</arguments> \n <remoteDir>",.grid$ssh$remotePath,"</remoteDir>\n<execIp>",.grid$ssh$ip,"</execIp>\n",sep="")
 	for(i in 1:length(outputFiles))
 		command=paste(command, "<outputFile>",outputFiles[[i]],"</outputFile>\n",sep="")

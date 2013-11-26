@@ -48,15 +48,14 @@ function(grid.input.Parameters, fName, yName, varlist, scriptName, remScriptName
 		
 		err=FALSE	
 		if(noCondor){
-			system(paste(R.home(component="bin"),"/R CMD BATCH --vanilla ", remScriptName, "-",count, sep=""))
+			system(paste(R.home(component="bin"),"/R CMD BATCH ", remScriptName, "-",count, sep=""))
 		}
 		else{
 			#make condorscript
 			condorScript=paste("Executable     = ",remoteRPath,"
-							Universe       = vanilla
 							should_transfer_files = YES
 							when_to_transfer_output = ON_EXIT
-							arguments      = \"CMD BATCH --vanilla --slave ",remScriptName, "-",count,"\"
+							arguments      = \"CMD BATCH --slave ",remScriptName, "-",count,"\"
 							Error          = ",errName,"-",count,"
 							transfer_input_files =",remScriptName,"-",count,",",fName,"
 							transfer_files = ALWAYS

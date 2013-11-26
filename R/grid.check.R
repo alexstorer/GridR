@@ -44,7 +44,7 @@ while(!end)
 
 	write.table(script,file=localScript,quote=FALSE,row.names=FALSE,col.names=FALSE)
 
-	system(paste(R.home(component="bin"), "/R CMD BATCH --vanilla \"",localScript,"\"", sep=""))
+	system(paste(R.home(component="bin"), "/R CMD BATCH \"",localScript,"\"", sep=""))
 	grid.input.Parameters=NULL
 	if(file.exists(fMissing))
 		load(fMissing)

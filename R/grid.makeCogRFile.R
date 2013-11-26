@@ -31,7 +31,7 @@ function(scriptName, remScriptName, fName, yName){
 					if(length(err)>0)
 					write.table(paste(c(\"cannot copy file 2 to remote machine:\\n\",err)),\"",yName,"\",quote=FALSE,row.names=FALSE,col.names=FALSE)
 					#execute job remotely
-					err=print(system(\"",paste("cogrun -s ",.grid$globusHost," -d ",.grid$cogDir," -e /usr/bin/R -args \\\"CMD BATCH --vanilla ",remScriptName,"\\\"",sep=""),"\", intern=TRUE))
+					err=print(system(\"",paste("cogrun -s ",.grid$globusHost," -d ",.grid$cogDir," -e /usr/bin/R -args \\\"CMD BATCH  ",remScriptName,"\\\"",sep=""),"\", intern=TRUE))
 					if(err!=(\"Job completed\"))
 					write.table(paste(\"cannot execute job on remote machine:\\n\",paste(err, collapse=\"\\n\")),\"",yName,"\",quote=FALSE,row.names=FALSE,col.names=FALSE)
 					#copy result back

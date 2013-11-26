@@ -55,11 +55,11 @@ function(plots, yName, psName, fName, remScriptName, remMainName,remMainNameOut,
 	if(!onlyssh && batch==FALSE) {
 	
 	  # create R script which submits the job to condor and waits until the file yName exists
+          # remove the vanilla
 		remMainScript=paste("condorScript=paste(\"Executable     = ",.grid$remoteRPath,"
-			Universe       = vanilla
 			should_transfer_files = YES
 			when_to_transfer_output = ON_EXIT
-			arguments      = \\\"CMD BATCH --vanilla --slave ",remScriptName,"\\\"
+			arguments      = \\\"CMD BATCH --slave ",remScriptName,"\\\"
 			Error          = ",errName,"
 			transfer_input_files =",remScriptName,",",fName,
 			#"\ntransfer_files = ALWAYS",
